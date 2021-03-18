@@ -1,4 +1,4 @@
-package com.udacity
+package com.udacity.ui.main
 
 import android.app.DownloadManager
 import android.app.NotificationManager
@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.udacity.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
     }
+
+    private fun createChanell
 
     companion object {
         private const val URL =
