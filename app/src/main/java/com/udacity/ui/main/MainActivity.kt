@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import com.udacity.R
@@ -35,11 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         val notificationManager = getSystemService(NotificationManager::class.java)
 
-        notificationManager.createLoadAppNotificationChannel(getString(R.string.channel_id), getString(R.string.channel_name))
+        notificationManager.createLoadAppNotificationChannel(
+            getString(R.string.channel_id),
+            getString(R.string.channel_name)
+        )
         notificationManager.sendNotification(application)
 
         custom_button.setOnClickListener {
-            download()
+            actOnSelectedRadioOption()
         }
     }
 
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun download() {
+    private fun download(radioOption: RadioOption) {
         val request =
             DownloadManager.Request(Uri.parse(URL))
                 .setTitle(getString(R.string.app_name))
@@ -63,9 +67,25 @@ class MainActivity : AppCompatActivity() {
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
     }
 
+    private fun actOnSelectedRadioOption() {
+        when (main_radio_group.checkedRadioButtonId) {
+            R.id.main_radio_group_glide -> download(RadioOption.GLIDE)
+            R.id.main_radio_group_retrofit -> download(RadioOption.RETROFIT)
+            R.id.main_radio_group_udacity -> download(RadioOption.UDACITY)
+            else -> Toast.makeText(this, "Please select radio option", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
     companion object {
         private const val URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
+    }
+
+    private enum class RadioOption {
+        GLIDE,
+        RETROFIT,
+        UDACITY
     }
 
 }
