@@ -3,6 +3,8 @@ package com.udacity
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import kotlin.properties.Delegates
@@ -19,14 +21,28 @@ class LoadingButton @JvmOverloads constructor(
 
     }
 
+    private lateinit var rect: Rect
+
+    private var basePaint: Paint = Paint()
+
 
     init {
+        basePaint.color = context.resources.getColor(R.color.colorPrimary)
+        basePaint.style = Paint.Style.FILL
 
+        isClickable = true
     }
 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        canvas!!.drawRect(rect, basePaint)
+
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        rect = Rect(0, 0, w, h)
 
     }
 
